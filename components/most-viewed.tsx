@@ -21,7 +21,10 @@ function MostViewed({ posts, className }: MostViewedProps) {
             key={post.id}
             className="border-b border-b-border-disabled-secondary pb-3 group"
           >
-            <Link href={`/post/${post.id}`} className="flex gap-3">
+            <Link
+              href={`/post/${post.id}`}
+              className="flex gap-3 justify-between"
+            >
               <span className="text-base text-text-icons-disabled font-semibold leading-5 group-hover:underline">
                 {post.title}
               </span>
