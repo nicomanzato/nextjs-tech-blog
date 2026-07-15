@@ -47,7 +47,7 @@ function TopicsFilter({ topics }: TopicsFilterProps) {
             )}
           >
             {topic}
-            {isSelected && <XIcon className="size-2.5" />}
+            {isSelected && <XIcon className="size-4.5" />}
           </button>
         );
       })}

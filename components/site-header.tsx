@@ -18,9 +18,9 @@ function SiteHeader() {
         />
       </Link>
       <UploadPostDialog>
-        <Button className="h-auto gap-1 border-none bg-transparent p-0 text-base font-semibold  hover:bg-transparent hover:text-text-icons-inverse">
-          <span className="text-text-icons-inverse">New post</span>
-          <ArrowRightIcon className="size-6 text-text-icons-brand" />
+        <Button variant="black" className="group gap-1">
+          <span>New post</span>
+          <ArrowRightIcon className="size-6 text-text-icons-brand group-active:text-text-icons-highlight group-hover:text-text-icons-highlight" />
         </Button>
       </UploadPostDialog>
     </header>

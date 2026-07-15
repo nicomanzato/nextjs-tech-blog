@@ -1,9 +1,9 @@
 "use client";
 
 import * as React from "react";
-import { ArrowUp } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { ArrowUpIcon } from "@/components/icons/arrow-up";
 import {
   Dialog,
   DialogContent,
@@ -15,17 +15,19 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
+import { cn } from "@/lib/utils";
 
 type Step = "form" | "uploading" | "success";
 
 const cardClassName =
   "gap-6 rounded-none border-2 border-border-inverse bg-background-brand p-8 text-text-icons-primary shadow-[8px_8px_0_var(--neutral-900)] sm:max-w-md";
-const buttonFieldClassName = "h-12 rounded-none border-2 border-border-inverse bg-background-surface";
 
 export function UploadPostDialog({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = React.useState(false);
   const [step, setStep] = React.useState<Step>("form");
   const [progress, setProgress] = React.useState(0);
+  const [fileName, setFileName] = React.useState<string | null>(null);
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   React.useEffect(() => {
     if (step !== "uploading") return;
@@ -45,16 +47,19 @@ export function UploadPostDialog({ children }: { children: React.ReactNode }) {
 
   function handleOpenChange(next: boolean) {
     setOpen(next);
-    if (!next) setStep("form");
+    if (!next) {
+      setStep("form");
+      setFileName(null);
+    }
   }
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className={cardClassName}>
+      <DialogContent className={cn("w-160", cardClassName)}>
         {step === "form" && (
           <>
-            <DialogHeader className="gap-2">
+            <DialogHeader className="gap-2 text-center">
               <DialogTitle className="font-heading text-2xl font-bold">
                 Upload your post
               </DialogTitle>
@@ -64,16 +69,25 @@ export function UploadPostDialog({ children }: { children: React.ReactNode }) {
               </DialogDescription>
             </DialogHeader>
             <Input placeholder="Post Title" />
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={(e) => setFileName(e.target.files?.[0]?.name ?? null)}
+            />
             <Button
-              variant="secondary"
-              className={`${buttonFieldClassName} w-full justify-between font-normal text-text-icons-primary hover:bg-background-brand`}
+              type="button"
+              variant="green-outline"
+              className={`w-full justify-center gap-2`}
+              onClick={() => fileInputRef.current?.click()}
             >
-              Upload image <ArrowUp className="size-4" />
+              {fileName ?? "Upload image"} <ArrowUpIcon className="size-4" />
             </Button>
             <DialogFooter className="mx-0 mb-0 justify-center border-none bg-transparent p-0">
               <Button
                 variant="black"
-                className="h-12 rounded-none"
+                className="h-12 rounded-none mx-auto"
                 onClick={() => {
                   setProgress(0);
                   setStep("uploading");
@@ -87,7 +101,7 @@ export function UploadPostDialog({ children }: { children: React.ReactNode }) {
 
         {step === "uploading" && (
           <>
-            <DialogHeader className="gap-2">
+            <DialogHeader className="gap-2 text-center">
               <DialogTitle className="font-heading text-2xl font-bold">
                 Upload your post
               </DialogTitle>
@@ -103,7 +117,7 @@ export function UploadPostDialog({ children }: { children: React.ReactNode }) {
               </p>
               <Progress
                 value={progress}
-                className="h-2 rounded-none bg-background-surface [&>div]:bg-background-inverse"
+                className="h-2 rounded-none bg-text-icons-disabled [&>div]:bg-background-inverse"
               />
               <button
                 type="button"
@@ -131,7 +145,7 @@ export function UploadPostDialog({ children }: { children: React.ReactNode }) {
             <DialogFooter className="mx-0 mb-0 justify-center border-none bg-transparent p-0">
               <Button
                 variant="black"
-                className="h-12 rounded-none"
+                className="h-12 rounded-none mx-auto"
                 onClick={() => handleOpenChange(false)}
               >
                 Done

@@ -1,22 +1,16 @@
-import * as React from "react"
+import * as React from "react";
 
-import { cn } from "@/lib/utils"
-import { Input } from "@/components/ui/input"
+import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
 
 type TextFieldProps = React.ComponentProps<typeof Input> & {
-  label?: string
-  error?: string
-}
+  label?: string;
+  error?: string;
+};
 
-function TextField({
-  label,
-  error,
-  id,
-  className,
-  ...props
-}: TextFieldProps) {
-  const generatedId = React.useId()
-  const inputId = id ?? generatedId
+function TextField({ label, error, id, className, ...props }: TextFieldProps) {
+  const generatedId = React.useId();
+  const inputId = id ?? generatedId;
 
   return (
     <div className="flex flex-col gap-1">
@@ -39,7 +33,7 @@ function TextField({
       </div>
       {error && <p className="text-sm text-destructive">{error}</p>}
     </div>
-  )
+  );
 }
 
-export { TextField }
+export { TextField };
