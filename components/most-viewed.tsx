@@ -1,35 +1,45 @@
-import Image from "next/image"
-import Link from "next/link"
+import Image from "next/image";
+import Link from "next/link";
 
-import type { PostSummary } from "@/lib/api"
+import type { PostSummary } from "@/lib/api";
+import { cn } from "@/lib/utils";
 
 type MostViewedProps = {
-  posts: PostSummary[]
-}
+  posts: PostSummary[];
+  className?: string;
+};
 
-// ponytail: no view-count tracking yet, just shows the first N posts passed in
-function MostViewed({ posts }: MostViewedProps) {
+function MostViewed({ posts, className }: MostViewedProps) {
   return (
-    <div className="flex flex-col gap-4">
-      <h2 className="text-sm font-bold text-white">Most viewed</h2>
+    <div className={cn("flex flex-col gap-4", className)}>
+      <h2 className="text-lg font-bold text-text-icons-inverse leading-1 pb-3">
+        Most viewed
+      </h2>
       <ul className="flex flex-col gap-4">
         {posts.map((post) => (
-          <li key={post.id}>
-            <Link href={`/post/${post.id}`} className="flex items-center gap-3">
-              <Image
-                src={post.imageUrl}
-                alt={post.title}
-                width={56}
-                height={56}
-                className="size-14 shrink-0 rounded object-cover"
-              />
-              <span className="line-clamp-3 text-sm text-white">{post.title}</span>
+          <li
+            key={post.id}
+            className="border-b border-b-border-disabled-secondary pb-3 group"
+          >
+            <Link href={`/post/${post.id}`} className="flex gap-3">
+              <span className="text-base text-text-icons-disabled font-semibold leading-5 group-hover:underline">
+                {post.title}
+              </span>
+              <div className="overflow-hidden w-20 h-20 shrink-0 rounded">
+                <Image
+                  src={post.imageUrl}
+                  alt={post.title}
+                  width={80}
+                  height={80}
+                  className="size-20 object-cover card-transition group-hover:scale-110"
+                />
+              </div>
             </Link>
           </li>
         ))}
       </ul>
     </div>
-  )
+  );
 }
 
-export { MostViewed }
+export { MostViewed };

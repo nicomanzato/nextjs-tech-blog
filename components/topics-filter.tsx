@@ -1,55 +1,58 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { X } from "lucide-react"
+import * as React from "react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
+import { XIcon } from "@/components/icons/x";
 
 type TopicsFilterProps = {
-  topics: string[]
-}
+  topics: string[];
+};
 
 function TopicsFilter({ topics }: TopicsFilterProps) {
-  const [selected, setSelected] = React.useState<string[]>(["All"])
+  const [selected, setSelected] = React.useState<string[]>(["All"]);
 
   function toggle(topic: string) {
     if (topic === "All") {
-      setSelected(["All"])
-      return
+      setSelected(["All"]);
+      return;
     }
     setSelected((current) => {
-      const withoutAll = current.filter((t) => t !== "All")
-      const isSelected = withoutAll.includes(topic)
+      const withoutAll = current.filter((t) => t !== "All");
+      const isSelected = withoutAll.includes(topic);
       const next = isSelected
         ? withoutAll.filter((t) => t !== topic)
-        : [...withoutAll, topic]
-      return next.length === 0 ? ["All"] : next
-    })
+        : [...withoutAll, topic];
+      return next.length === 0 ? ["All"] : next;
+    });
   }
 
   return (
-    <div className="flex flex-wrap gap-3">
+    <div className="flex flex-nowrap lg:flex-wrap gap-2 items-center overflow-x-auto no-scrollbar">
+      <span className="text-text-icons-inverse font-bold text-lg mr-4 shrink-0">
+        Topics
+      </span>
       {["All", ...topics].map((topic) => {
-        const isSelected = selected.includes(topic)
+        const isSelected = selected.includes(topic);
         return (
           <button
             key={topic}
             type="button"
             onClick={() => toggle(topic)}
             className={cn(
-              "inline-flex items-center gap-1.5 rounded-full border px-4 py-1.5 text-sm font-medium transition-colors",
+              "inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3.5 py-1.5 min-h-11.25 text-base font-medium base-transition",
               isSelected
-                ? "border-lime bg-lime text-ink"
-                : "border-white/30 text-white hover:border-white"
+                ? "border-border-brand bg-background-brand text-text-icons-primary"
+                : "border-border-disabled text-text-icons-disabled hover:border-text-icons-inverse hover:text-text-icons-inverse",
             )}
           >
             {topic}
-            {isSelected && <X className="size-3.5" />}
+            {isSelected && <XIcon className="size-2.5" />}
           </button>
-        )
+        );
       })}
     </div>
-  )
+  );
 }
 
-export { TopicsFilter }
+export { TopicsFilter };

@@ -29,12 +29,12 @@ export default function RootLayout({
       lang="en"
       className={`${spaceGrotesk.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
-        <div className="min-h-full bg-black">
+      <body className="min-h-full bg-black">
+        <div className="min-h-full max-w-360 mx-auto flex flex-col pb-14">
           <SiteHeader />
           {children}
+          <SiteFooter />
         </div>
-        <SiteFooter />
       </body>
     </html>
   );

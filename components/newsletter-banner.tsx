@@ -1,16 +1,17 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 
 function NewsletterBanner() {
   return (
-    <div className="flex flex-col items-start gap-4 bg-active-purple px-6 py-6 text-white sm:flex-row sm:items-center sm:justify-between">
-      <p>
-        Sign up for our newsletter <span className="font-bold">and get daily updates</span>
+    <div className="flex flex-col items-start gap-4 bg-background-interactive p-8 md:px-10 md:py-11 text-text-icons-inverse sm:flex-row sm:items-center sm:justify-between">
+      <p className="text-[27px] leading-[1.21]">
+        Sign up for our newsletter{" "}
+        <span className="font-bold">and get daily updates</span>
       </p>
-      <Button variant="primary" className="h-auto px-6 py-2">
+      <Button variant="primary" className="px-10 w-full md:w-fit">
         Subscribe
       </Button>
     </div>
-  )
+  );
 }
 
-export { NewsletterBanner }
+export { NewsletterBanner };

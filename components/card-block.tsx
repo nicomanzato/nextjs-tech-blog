@@ -1,23 +1,31 @@
-import { Card, type CardProps } from "@/components/ui/card"
+import { Card, type CardProps } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 type CardBlockProps = {
-  cards: [CardProps, CardProps, CardProps]
-  reverse?: boolean
-}
+  cards: [CardProps, CardProps, CardProps];
+  reverse?: boolean;
+  className?: string;
+};
 
-function CardBlock({ cards, reverse = false }: CardBlockProps) {
-  const [first, second, third] = cards
+function CardBlock({ cards, reverse = false, className }: CardBlockProps) {
+  const [first, second, third] = cards;
 
   const stacked = (
-    <div className="flex flex-col gap-6">
-      <Card {...first} orientation="landscape" />
-      <Card {...second} orientation="landscape" />
+    <div className="md:h-197.5 flex flex-col gap-8 md:gap-0 justify-between col-span-1 md:col-span-9">
+      <Card {...first} orientation="landscape" className="h-95" />
+      <Card {...second} orientation="landscape" className="h-95" />
     </div>
-  )
-  const tall = <Card {...third} orientation="portrait" className="h-full" />
+  );
+  const tall = (
+    <Card
+      {...third}
+      orientation="portrait"
+      className="h-95 md:h-197.5 col-span-1 md:col-span-11"
+    />
+  );
 
   return (
-    <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+    <div className={cn("grid gap-8 grid-cols-1 md:grid-cols-20", className)}>
       {reverse ? (
         <>
           {tall}
@@ -30,7 +38,7 @@ function CardBlock({ cards, reverse = false }: CardBlockProps) {
         </>
       )}
     </div>
-  )
+  );
 }
 
-export { CardBlock }
+export { CardBlock };

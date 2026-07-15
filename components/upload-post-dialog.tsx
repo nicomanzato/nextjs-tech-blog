@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { ArrowUp } from "lucide-react"
+import * as React from "react";
+import { ArrowUp } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -12,41 +12,40 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Progress } from "@/components/ui/progress"
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Progress } from "@/components/ui/progress";
 
-type Step = "form" | "uploading" | "success"
+type Step = "form" | "uploading" | "success";
 
 const cardClassName =
-  "gap-6 rounded-none border-2 border-ink bg-lime p-8 text-ink shadow-[8px_8px_0_var(--ink)] sm:max-w-md"
-const buttonFieldClassName = "h-12 rounded-none border-2 border-ink bg-white"
+  "gap-6 rounded-none border-2 border-border-inverse bg-background-brand p-8 text-text-icons-primary shadow-[8px_8px_0_var(--neutral-900)] sm:max-w-md";
+const buttonFieldClassName = "h-12 rounded-none border-2 border-border-inverse bg-background-surface";
 
 export function UploadPostDialog({ children }: { children: React.ReactNode }) {
-  const [open, setOpen] = React.useState(false)
-  const [step, setStep] = React.useState<Step>("form")
-  const [progress, setProgress] = React.useState(0)
+  const [open, setOpen] = React.useState(false);
+  const [step, setStep] = React.useState<Step>("form");
+  const [progress, setProgress] = React.useState(0);
 
   React.useEffect(() => {
-    if (step !== "uploading") return
+    if (step !== "uploading") return;
     const id = setInterval(() => {
       setProgress((current) => {
-        const next = current + 10
+        const next = current + 10;
         if (next >= 100) {
-          clearInterval(id)
-          setStep("success")
-          return 100
+          clearInterval(id);
+          setStep("success");
+          return 100;
         }
-        return next
-      })
-    }, 200)
-    // ponytail: simulated upload, wire to real endpoint once backend exists
-    return () => clearInterval(id)
-  }, [step])
+        return next;
+      });
+    }, 200);
+    return () => clearInterval(id);
+  }, [step]);
 
   function handleOpenChange(next: boolean) {
-    setOpen(next)
-    if (!next) setStep("form")
+    setOpen(next);
+    if (!next) setStep("form");
   }
 
   return (
@@ -59,7 +58,7 @@ export function UploadPostDialog({ children }: { children: React.ReactNode }) {
               <DialogTitle className="font-heading text-2xl font-bold">
                 Upload your post
               </DialogTitle>
-              <DialogDescription className="text-ink/70">
+              <DialogDescription className="text-text-icons-primary/70">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 Suspendisse commodo libero.
               </DialogDescription>
@@ -67,7 +66,7 @@ export function UploadPostDialog({ children }: { children: React.ReactNode }) {
             <Input placeholder="Post Title" />
             <Button
               variant="secondary"
-              className={`${buttonFieldClassName} w-full justify-between font-normal text-ink hover:bg-lime`}
+              className={`${buttonFieldClassName} w-full justify-between font-normal text-text-icons-primary hover:bg-background-brand`}
             >
               Upload image <ArrowUp className="size-4" />
             </Button>
@@ -76,8 +75,8 @@ export function UploadPostDialog({ children }: { children: React.ReactNode }) {
                 variant="black"
                 className="h-12 rounded-none"
                 onClick={() => {
-                  setProgress(0)
-                  setStep("uploading")
+                  setProgress(0);
+                  setStep("uploading");
                 }}
               >
                 Confirm
@@ -92,7 +91,7 @@ export function UploadPostDialog({ children }: { children: React.ReactNode }) {
               <DialogTitle className="font-heading text-2xl font-bold">
                 Upload your post
               </DialogTitle>
-              <DialogDescription className="text-ink/70">
+              <DialogDescription className="text-text-icons-primary/70">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 Suspendisse commodo libero.
               </DialogDescription>
@@ -104,7 +103,7 @@ export function UploadPostDialog({ children }: { children: React.ReactNode }) {
               </p>
               <Progress
                 value={progress}
-                className="h-2 rounded-none bg-white [&>div]:bg-ink"
+                className="h-2 rounded-none bg-background-surface [&>div]:bg-background-inverse"
               />
               <button
                 type="button"
@@ -142,5 +141,5 @@ export function UploadPostDialog({ children }: { children: React.ReactNode }) {
         )}
       </DialogContent>
     </Dialog>
-  )
+  );
 }
