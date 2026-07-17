@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { useForm } from "react-hook-form";
+import { usePathname, useRouter } from "next/navigation";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { z } from "zod";
 
@@ -30,6 +31,8 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 const UploadPostDialog = ({ children }: { children: React.ReactNode }) => {
+  const router = useRouter();
+  const pathname = usePathname();
   const [open, setOpen] = React.useState(false);
   const [step, setStep] = React.useState<Step>("form");
   const [progress, setProgress] = React.useState(0);
@@ -82,7 +85,10 @@ const UploadPostDialog = ({ children }: { children: React.ReactNode }) => {
       await createRelatedPost(formData, (percent) => {
         if (attemptRef.current === attempt) setProgress(percent);
       });
-      if (attemptRef.current === attempt) setStep("success");
+      if (attemptRef.current === attempt) {
+        setStep("success");
+        if (pathname.startsWith("/post/")) router.refresh();
+      }
     } catch (err) {
       if (attemptRef.current === attempt) {
         setUploadError(err instanceof Error ? err.message : "Upload failed");
@@ -121,19 +127,32 @@ const UploadPostDialog = ({ children }: { children: React.ReactNode }) => {
               </div>
               <div className="max-w-100 mx-auto w-full">
                 {step === "form" ? (
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0] ?? null;
-                      fileRef.current = file;
-                      setValue("fileName", file?.name ?? "", {
-                        shouldValidate: true,
-                      });
-                    }}
-                  />
+                  <>
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0] ?? null;
+                        fileRef.current = file;
+                        setValue("fileName", file?.name ?? "", {
+                          shouldValidate: true,
+                        });
+                      }}
+                    />
+
+                    <Button
+                      type="button"
+                      variant="green-outline"
+                      aria-invalid={!!errors.fileName}
+                      className="w-full justify-center gap-2 aria-invalid:border-destructive"
+                      onClick={() => fileInputRef.current?.click()}
+                    >
+                      {fileName || "Upload image"}{" "}
+                      <ArrowUpIcon className="size-6" />
+                    </Button>
+                  </>
                 ) : (
                   <div className="max-w-100 mx-auto w-full">
                     <p className="mb-2 text-sm font-medium">
@@ -162,16 +181,6 @@ const UploadPostDialog = ({ children }: { children: React.ReactNode }) => {
                   </div>
                 )}
 
-                <Button
-                  type="button"
-                  variant="green-outline"
-                  aria-invalid={!!errors.fileName}
-                  className="w-full justify-center gap-2 aria-invalid:border-destructive"
-                  onClick={() => fileInputRef.current?.click()}
-                >
-                  {fileName || "Upload image"}{" "}
-                  <ArrowUpIcon className="size-6" />
-                </Button>
                 {errors.fileName && (
                   <p className="mt-1 text-sm text-destructive">
                     {errors.fileName.message}

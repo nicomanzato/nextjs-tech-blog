@@ -23,7 +23,7 @@ const InputWithButton = ({
         variant="black"
         {...buttonProps}
         className={cn(
-          "h-12 rounded-none border-l-0",
+          "rounded-none border-l-0",
           buttonProps?.className
         )}
       >

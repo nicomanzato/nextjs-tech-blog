@@ -129,7 +129,7 @@ const PostDetail = async ({ params }: { params: Promise<{ id: string }> }) => {
             <UploadPostDialog>
               <button className="group inline-flex items-center gap-1 font-semibold text-text-icons-primary">
                 New post
-                <ArrowRightIcon className="size-4 text-text-icons-brand group-hover:text-text-icons-highlight" />
+                <ArrowRightIcon className="size-4 text-text-icons-interactive group-hover:text-text-icons-highlight" />
               </button>
             </UploadPostDialog>
           </div>
