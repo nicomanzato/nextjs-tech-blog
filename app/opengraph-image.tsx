@@ -13,7 +13,7 @@ const Sparkle = () => {
   };
 
   return (
-    <div style={{ position: "relative", width: 220, height: 220 }}>
+    <div style={{ display: "flex", position: "relative", width: 220, height: 220 }}>
       <div
         style={{ ...barStyle, width: 40, height: 220, left: 90, top: 0 }}
       />
