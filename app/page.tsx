@@ -41,7 +41,7 @@ const Home = async () => {
   return (
     <>
       <HeaderPlaceholder />
-      <main className="flex flex-col gap-8 md:gap-16 pb-14 pt-4 main-page-content-padding">
+      <main className="flex flex-col gap-8 md:gap-16 pb-5 md:pb-14 pt-4 main-page-content-padding">
         {hero && (
           <section className="flex flex-col gap-5 md:pt-7 animate-fade-from-bottom">
             <span className="text-lg text-text-icons-inverse font-semibold hidden md:block">
@@ -59,7 +59,7 @@ const Home = async () => {
 
         <TopicsFilter
           topics={topics}
-          className="animate-fade-from-bottom -mx-4 px-4 md:mx-0 md:px-0"
+          className="animate-fade-from-bottom -mx-5 md:mx-0"
         />
 
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-12">

@@ -58,7 +58,7 @@ const Card = ({
       />
       <div
         className={cn(
-          "absolute flex flex-col gap-2 text-text-icons-primary bottom-0 p-5",
+          "absolute flex flex-col gap-2 text-text-icons-primary bottom-0 left-0 right-0 md:right-auto p-5",
           {
             "md:h-full md:justify-center md:left-0": isLarge,
           },
@@ -82,7 +82,7 @@ const Card = ({
             )}
           >
             <h3
-              className={cn("font-bold text-lg lg:min-w-53", {
+              className={cn("font-bold text-lg md:min-w-53", {
                 "md:text-[41px] md:leading-13 md:max-w-125": isLarge,
               })}
             >

@@ -18,8 +18,8 @@ const SiteHeader = () => {
         />
       </Link>
       <UploadPostDialog>
-        <Button variant="transparent" className="group gap-1">
-          <span>New post</span>
+        <Button variant="transparent" className="group gap-1 px-0">
+          <span className="text-base md:text-lg">New post</span>
           <ArrowRightIcon className="size-6 text-text-icons-brand group-active:text-text-icons-highlight group-hover:text-text-icons-highlight" />
         </Button>
       </UploadPostDialog>

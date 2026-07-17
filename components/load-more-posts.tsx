@@ -62,7 +62,7 @@ const LoadMorePosts = ({
       {hasMore && (
         <Button
           variant="primary"
-          className="mb-16 md:mb-80 md:w-fit md:mx-auto"
+          className="mb-4 mt-4 md:mt-0 md:mb-80 md:w-fit md:mx-auto"
           disabled={isFetchingNextPage}
           onClick={() => fetchNextPage()}
         >

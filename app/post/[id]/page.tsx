@@ -15,6 +15,7 @@ import {
 } from "@/lib/api";
 import { renderArticleMarkdown } from "@/lib/parse-article";
 import { SiteFooter } from "@/components/site-footer";
+import { ArrowLeftIcon } from "@/components/icons/arrow-left";
 
 const SOCIALS = [
   { url: "/icons/linkedin-dark.svg", alt: "LinkedIn" },
@@ -61,9 +62,9 @@ const PostDetail = async ({ params }: { params: Promise<{ id: string }> }) => {
         <div className="relative flex h-full flex-col justify-center gap-8 px-8 md:px-18">
           <Link
             href="/"
-            className="inline-flex w-fit items-center gap-1 font-semibold text-text-icons-inverse hover:underline underline-offset-6"
+            className="inline-flex w-fit items-center text-sm md:text-base gap-1 font-semibold text-text-icons-inverse hover:underline underline-offset-6"
           >
-            <ArrowLeft className="size-4" /> Blog
+            <ArrowLeftIcon className="size-4" /> Blog
           </Link>
 
           <div className="flex flex-col items-start">
@@ -76,7 +77,7 @@ const PostDetail = async ({ params }: { params: Promise<{ id: string }> }) => {
                   height={32}
                   className="size-8 shrink-0 rounded-full object-cover"
                 />
-                <span className="text-sm font-semibold text-text-icons-primary">
+                <span className="text-lg md:text-[20px] font-semibold text-text-icons-primary">
                   By {post.author}
                 </span>
               </div>
@@ -95,7 +96,7 @@ const PostDetail = async ({ params }: { params: Promise<{ id: string }> }) => {
 
       <div className="grid grid-cols-1 md:grid-cols-20 gap-x-8 gap-y-10 md:pt-6 main-page-content-padding">
         <div className="order-2 md:order-1 flex gap-4 flex-col px-0 pb-6 col-span-1 md:col-span-4 md:sticky md:top-28 md:self-start">
-          <span className="font-bold text-lg">Share on</span>
+          <span className="font-bold text-base md:text-lg">Share on</span>
           <div className="flex gap-8 pt-3">
             {SOCIALS.map(({ url, alt }) => (
               <Link href="/" key={url}>
