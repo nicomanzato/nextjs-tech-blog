@@ -15,7 +15,7 @@ const MostViewed = ({ posts, className, titleClassName }: MostViewedProps) => {
     <div className={cn("flex flex-col gap-4", className)}>
       <h2
         className={cn(
-          "text-lg font-bold text-text-icons-inverse leading-1 pb-3",
+          "text-lg font-bold text-text-icons-inverse pb-3",
           titleClassName,
         )}
       >

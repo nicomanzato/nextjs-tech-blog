@@ -15,11 +15,14 @@ export type PostSummary = {
 export type PostDetail = PostSummary & {
   subtitle: string | null;
   author: string | null;
+  body: string;
 };
 
 export type RelatedPost = {
   id: string;
   title: string;
+  topic: string;
+  readTime: number;
   imageUrl: string;
   blurDataUrl: string | null;
   createdAt: string;

@@ -38,6 +38,9 @@
 }
 
 @theme {
+  --text-xl: 19px;
+  --text-xl--line-height: 1.5;
+  --text-2xl: 25px;
   --text-4xl: 35px;
 }
 
