@@ -1,11 +1,3 @@
-<svg
-  width="24"
-  height="24"
-  viewBox="0 0 24 24"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
-></svg>;
-
 import type { SVGProps } from "react";
 
 const ArrowLeftIcon = (props: SVGProps<SVGSVGElement>) => {
@@ -14,9 +6,9 @@ const ArrowLeftIcon = (props: SVGProps<SVGSVGElement>) => {
       <path
         d="M15 18L9 12L15 6"
         stroke="currentColor"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
