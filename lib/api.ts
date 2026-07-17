@@ -36,30 +36,58 @@ async function api<T>(path: string, init?: RequestInit): Promise<T> {
   return res.json();
 }
 
-export function getPosts() {
-  return api<PostSummary[]>("/posts");
+export type PostsPage = {
+  posts: PostSummary[];
+  hasMore: boolean;
+};
+
+export function getPosts(params?: {
+  offset?: number;
+  limit?: number;
+}): Promise<PostsPage> {
+  const query = new URLSearchParams();
+  if (params?.offset !== undefined) query.set("offset", String(params.offset));
+  if (params?.limit !== undefined) query.set("limit", String(params.limit));
+  const qs = query.toString();
+
+  return api<{ data: PostSummary[]; meta: { hasMore: boolean } }>(
+    `/posts${qs ? `?${qs}` : ""}`,
+    { next: { revalidate: 60 } },
+  ).then((res) => ({ posts: res.data, hasMore: res.meta.hasMore }));
 }
 
 export function getPost(id: string) {
-  return api<PostDetail>(`/post/${id}`);
+  return api<PostDetail>(`/post/${id}`, {
+    next: { revalidate: 60, tags: ["related-posts"] },
+  });
 }
 
 export function getRelatedPosts() {
-  return api<RelatedPost[]>("/posts/related");
+  return api<RelatedPost[]>("/posts/related", {
+    // revalidate is a long fallback ceiling — real freshness comes from
+    // revalidateTag("related-posts") firing right after a new upload.
+    next: { revalidate: 60 * 60 * 24 * 7, tags: ["related-posts"] },
+  });
 }
 
-export function createRelatedPost(
+function revalidateRelatedPosts() {
+  return fetch("/api/revalidate-related", { method: "POST" });
+}
+
+export async function createRelatedPost(
   formData: FormData,
   onProgress?: (percent: number) => void,
 ) {
   if (!onProgress) {
-    return api<RelatedPost>("/post/related", {
+    const post = await api<RelatedPost>("/post/related", {
       method: "POST",
       body: formData,
     });
+    await revalidateRelatedPosts();
+    return post;
   }
 
-  return new Promise<RelatedPost>((resolve, reject) => {
+  const post = await new Promise<RelatedPost>((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.open("POST", `${API_URL}/post/related`);
     xhr.upload.onprogress = (e) => {
@@ -77,4 +105,6 @@ export function createRelatedPost(
     xhr.onerror = () => reject(new Error("Upload failed"));
     xhr.send(formData);
   });
+  await revalidateRelatedPosts();
+  return post;
 }

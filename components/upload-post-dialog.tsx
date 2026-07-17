@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -46,7 +46,7 @@ const UploadPostDialog = ({ children }: { children: React.ReactNode }) => {
     reset,
     formState: { errors },
   } = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+    resolver: standardSchemaResolver(formSchema),
     defaultValues: { title: "", fileName: "" },
   });
   const fileName = watch("fileName");

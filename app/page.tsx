@@ -3,10 +3,12 @@ import { CardBlock } from "@/components/card-block";
 import { MostViewed } from "@/components/most-viewed";
 import { NewsletterBanner } from "@/components/newsletter-banner";
 import { TopicsFilter } from "@/components/topics-filter";
-import { Button } from "@/components/ui/button";
 import { getPosts, type PostSummary } from "@/lib/api";
 import { SiteFooter } from "@/components/site-footer";
 import { HeaderPlaceholder } from "@/components/header-placeholder";
+import { LoadMorePosts } from "@/components/load-more-posts";
+
+const FIRST_PAGE_SIZE = 10;
 
 const toCardProps = (post: PostSummary) => {
   return {
@@ -21,7 +23,7 @@ const toCardProps = (post: PostSummary) => {
 };
 
 const Home = async () => {
-  const posts = await getPosts();
+  const { posts, hasMore } = await getPosts({ limit: FIRST_PAGE_SIZE });
 
   const [hero, ...rest] = posts;
   const gridPosts = rest.slice(0, 9);
@@ -89,12 +91,10 @@ const Home = async () => {
               />
             )}
 
-            <Button
-              variant="primary"
-              className="mb-16 md:mb-80 md:w-fit md:mx-auto"
-            >
-              Load more
-            </Button>
+            <LoadMorePosts
+              initialOffset={FIRST_PAGE_SIZE}
+              initialHasMore={hasMore}
+            />
           </div>
 
           <MostViewed

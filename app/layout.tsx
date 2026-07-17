@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Space_Grotesk, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
+import { QueryProvider } from "@/components/query-provider";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-sans",
@@ -29,10 +30,12 @@ const RootLayout = ({
       className={`${spaceGrotesk.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-black">
-        <div className="min-h-full max-w-360 mx-auto flex flex-col">
-          <SiteHeader />
-          {children}
-        </div>
+        <QueryProvider>
+          <div className="min-h-full max-w-360 mx-auto flex flex-col">
+            <SiteHeader />
+            {children}
+          </div>
+        </QueryProvider>
       </body>
     </html>
   );

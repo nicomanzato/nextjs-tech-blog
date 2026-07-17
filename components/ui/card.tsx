@@ -82,7 +82,7 @@ const Card = ({
             )}
           >
             <h3
-              className={cn("font-bold text-lg", {
+              className={cn("font-bold text-lg min-w-60", {
                 "md:text-[41px] md:leading-13 md:max-w-125": isLarge,
               })}
             >

@@ -1,0 +1,20 @@
+.base-transition {
+  @apply transition duration-150;
+}
+
+.card-transition {
+  @apply transition-transform duration-150 ease-out;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.main-page-content-padding {
+  @apply px-5 md:pl-17.5 md:pr-14.5;
+}

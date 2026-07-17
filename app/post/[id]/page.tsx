@@ -36,7 +36,7 @@ function toRelatedCardProps(post: RelatedPost) {
 
 const PostDetail = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
-  const [post, posts, relatedPosts] = await Promise.all([
+  const [post, { posts }, relatedPosts] = await Promise.all([
     getPost(id),
     getPosts(),
     getRelatedPosts(),
@@ -106,7 +106,7 @@ const PostDetail = async ({ params }: { params: Promise<{ id: string }> }) => {
         </div>
         <article className="order-1 md:order-2 col-span-1 md:col-span-11 flex flex-col gap-8 bg-background-surface text-text-icons-primary md:pl-9">
           <div
-            className="flex flex-col gap-6 md:pl-8 md:pb-8 [&>h1:not(:first-of-type)]:mt-10 [&>h1]:text-xl [&>h1]:leading-normal md:[&>h1]:text-[21px] [&>h1]:font-bold [&>p]:text-text-icons-primary/70 [&>p]:font-normal [&>p]:text-base [&>p]:leading-[1.8] [&>p]:tracking-normal [&>p]:align-middle [&>p:has(img)]:mt-10 [&>blockquote]:mt-10 [&>blockquote+p]:mt-10 [&>blockquote]:border-l-4 [&>blockquote]:border-background-brand [&>blockquote]:py-6 [&>blockquote]:pl-6 [&>blockquote]:text-lg [&>blockquote]:leading-[1.8] [&>blockquote]:font-medium [&_a]:text-text-icons-interactive [&_a]:underline [&_img]:h-64 [&_img]:w-full [&_img]:object-cover md:[&_img]:h-96"
+            className="article-content"
             dangerouslySetInnerHTML={{
               __html: renderArticleMarkdown(post.body),
             }}

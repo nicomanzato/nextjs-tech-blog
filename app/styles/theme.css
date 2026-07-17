@@ -1,0 +1,100 @@
+@theme inline {
+  /* Design system - semantic tokens */
+  --color-text-icons-primary: var(--text-icons-primary);
+  --color-text-icons-inverse: var(--text-icons-inverse);
+  --color-text-icons-brand: var(--text-icons-brand);
+  --color-text-icons-interactive: var(--text-icons-interactive);
+  --color-text-icons-highlight: var(--text-icons-highlight);
+  --color-text-icons-secondary: var(--text-icons-secondary);
+  --color-background-surface: var(--background-surface);
+  --color-background-inverse: var(--background-inverse);
+  --color-background-brand: var(--background-brand);
+  --color-background-interactive: var(--background-interactive);
+  --color-background-active: var(--background-active);
+  --color-border-inverse: var(--border-inverse);
+  --color-border-brand: var(--border-brand);
+  --color-text-icons-disabled: var(--text-icons-disabled);
+  --color-border-disabled: var(--border-disabled);
+  --color-border-disabled-secondary: var(--border-disabled-secondary);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-sans);
+  --color-ring: var(--ring);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --radius-xl: calc(var(--radius) * 1.4);
+}
+
+@theme {
+  --text-xl: 19px;
+  --text-xl--line-height: 1.5;
+  --text-2xl: 25px;
+  --text-4xl: 35px;
+}
+
+:root {
+  /* Design system - palette (raw brand values, estimated from Figma) */
+  --neutral-white: #ffffff;
+  --neutral-black: #000000;
+  --brand-lime: #d8f34e;
+  --brand-purple: #9c73f7;
+  --brand-dark-purple: #240f35;
+  --gray-light: #8c8c8c;
+  --gray-dark: #595959;
+  --brand-orange: #e18c92;
+
+  /* Design system - semantic tokens (purpose, not color name) */
+  --text-icons-primary: var(--neutral-black); /* ink text on light surfaces */
+  --text-icons-secondary: var(--gray-dark);
+  --text-icons-inverse: var(--neutral-white); /* white text on dark surfaces */
+  --text-icons-brand: var(--brand-lime); /* lime text on dark surfaces */
+  --text-icons-highlight: var(--brand-orange);
+  --text-icons-interactive: var(
+    --brand-purple
+  ); /* links, active/focus accents */
+  --text-icons-disabled: var(--gray-light);
+
+  --background-surface: var(
+    --neutral-white
+  ); /* white surfaces: inputs, card panels */
+  --background-inverse: var(
+    --neutral-black
+  ); /* black surfaces: black button, dark panels */
+  --background-brand: var(
+    --brand-lime
+  ); /* lime surfaces: primary button, badges */
+  --background-interactive: var(
+    --brand-purple
+  ); /* purple surfaces: active state, footer/newsletter */
+  --background-active: var(--brand-dark-purple);
+
+  --border-inverse: var(
+    --neutral-black
+  ); /* ink borders: inputs, black variant */
+  --border-brand: var(--brand-lime); /* lime borders: secondary button */
+  --border-disabled: var(--gray-light);
+  --border-disabled-secondary: var(--gray-dark);
+
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+
+  /* Shadcn variables - remapped to our design system where a brand equivalent exists */
+  --ring: var(--text-icons-interactive);
+
+  --radius: 0.625rem;
+}
