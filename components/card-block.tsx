@@ -7,20 +7,28 @@ type CardBlockProps = {
   className?: string;
 };
 
-function CardBlock({ cards, reverse = false, className }: CardBlockProps) {
+const CardBlock = ({ cards, reverse = false, className }: CardBlockProps) => {
   const [first, second, third] = cards;
 
   const stacked = (
     <div className="md:h-197.5 flex flex-col gap-8 md:gap-0 justify-between col-span-1 md:col-span-9">
-      <Card {...first} orientation="landscape" className="h-95" />
-      <Card {...second} orientation="landscape" className="h-95" />
+      <Card
+        {...first}
+        orientation="landscape"
+        className="h-95 animate-fade-from-bottom"
+      />
+      <Card
+        {...second}
+        orientation="landscape"
+        className="h-95 animate-fade-from-top"
+      />
     </div>
   );
   const tall = (
     <Card
       {...third}
       orientation="portrait"
-      className="h-95 md:h-197.5 col-span-1 md:col-span-11"
+      className="h-95 md:h-197.5 col-span-1 md:col-span-11 animate-fade-from-right"
     />
   );
 
@@ -39,6 +47,6 @@ function CardBlock({ cards, reverse = false, className }: CardBlockProps) {
       )}
     </div>
   );
-}
+};
 
 export { CardBlock };

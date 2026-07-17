@@ -1,6 +1,6 @@
 import type { SVGProps } from "react";
 
-function FileTextIcon(props: SVGProps<SVGSVGElement>) {
+const FileTextIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
     <svg viewBox="0 0 16 16" fill="none" aria-hidden="true" {...props}>
       <path
@@ -24,6 +24,6 @@ function FileTextIcon(props: SVGProps<SVGSVGElement>) {
       />
     </svg>
   );
-}
+};
 
 export { FileTextIcon };

@@ -7,12 +7,13 @@ import { XIcon } from "@/components/icons/x";
 
 type TopicsFilterProps = {
   topics: string[];
+  className?: string;
 };
 
-function TopicsFilter({ topics }: TopicsFilterProps) {
+const TopicsFilter = ({ topics, className }: TopicsFilterProps) => {
   const [selected, setSelected] = React.useState<string[]>(["All"]);
 
-  function toggle(topic: string) {
+  const toggle = (topic: string) => {
     if (topic === "All") {
       setSelected(["All"]);
       return;
@@ -25,10 +26,15 @@ function TopicsFilter({ topics }: TopicsFilterProps) {
         : [...withoutAll, topic];
       return next.length === 0 ? ["All"] : next;
     });
-  }
+  };
 
   return (
-    <div className="flex flex-nowrap lg:flex-wrap gap-2 items-center overflow-x-auto no-scrollbar">
+    <div
+      className={cn(
+        "flex flex-nowrap lg:flex-wrap gap-2 items-center overflow-x-auto no-scrollbar",
+        className,
+      )}
+    >
       <span className="text-text-icons-inverse font-bold text-lg mr-4 shrink-0">
         Topics
       </span>
@@ -53,6 +59,6 @@ function TopicsFilter({ topics }: TopicsFilterProps) {
       })}
     </div>
   );
-}
+};
 
 export { TopicsFilter };

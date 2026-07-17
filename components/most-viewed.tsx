@@ -7,12 +7,18 @@ import { cn } from "@/lib/utils";
 type MostViewedProps = {
   posts: PostSummary[];
   className?: string;
+  titleClassName?: string;
 };
 
-function MostViewed({ posts, className }: MostViewedProps) {
+const MostViewed = ({ posts, className, titleClassName }: MostViewedProps) => {
   return (
     <div className={cn("flex flex-col gap-4", className)}>
-      <h2 className="text-lg font-bold text-text-icons-inverse leading-1 pb-3">
+      <h2
+        className={cn(
+          "text-lg font-bold text-text-icons-inverse leading-1 pb-3",
+          titleClassName,
+        )}
+      >
         Most viewed
       </h2>
       <ul className="flex flex-col gap-4">
@@ -35,6 +41,12 @@ function MostViewed({ posts, className }: MostViewedProps) {
                   width={80}
                   height={80}
                   className="size-20 object-cover card-transition group-hover:scale-110"
+                  {...(post.blurDataUrl
+                    ? {
+                        placeholder: "blur" as const,
+                        blurDataURL: post.blurDataUrl,
+                      }
+                    : {})}
                 />
               </div>
             </Link>
@@ -43,6 +55,6 @@ function MostViewed({ posts, className }: MostViewedProps) {
       </ul>
     </div>
   );
-}
+};
 
 export { MostViewed };

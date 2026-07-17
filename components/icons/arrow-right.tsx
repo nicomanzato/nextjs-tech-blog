@@ -1,6 +1,6 @@
 import type { SVGProps } from "react";
 
-function ArrowRightIcon(props: SVGProps<SVGSVGElement>) {
+const ArrowRightIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" {...props}>
       <path
@@ -12,6 +12,6 @@ function ArrowRightIcon(props: SVGProps<SVGSVGElement>) {
       />
     </svg>
   );
-}
+};
 
 export { ArrowRightIcon };

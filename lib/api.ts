@@ -8,6 +8,7 @@ export type PostSummary = {
   topic: string | null;
   readTime: number | null;
   imageUrl: string;
+  blurDataUrl: string | null;
   source: PostSource;
 };
 
@@ -20,6 +21,7 @@ export type RelatedPost = {
   id: string;
   title: string;
   imageUrl: string;
+  blurDataUrl: string | null;
   createdAt: string;
 };
 

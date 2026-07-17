@@ -29,10 +29,7 @@ const formSchema = z.object({
 });
 type FormValues = z.infer<typeof formSchema>;
 
-const cardClassName =
-  "gap-6 rounded-none border-2 border-border-inverse bg-background-brand p-8 text-text-icons-primary shadow-[8px_8px_0_var(--neutral-900)] sm:max-w-md";
-
-export function UploadPostDialog({ children }: { children: React.ReactNode }) {
+const UploadPostDialog = ({ children }: { children: React.ReactNode }) => {
   const [open, setOpen] = React.useState(false);
   const [step, setStep] = React.useState<Step>("form");
   const [progress, setProgress] = React.useState(0);
@@ -54,7 +51,7 @@ export function UploadPostDialog({ children }: { children: React.ReactNode }) {
   });
   const fileName = watch("fileName");
 
-  function handleOpenChange(next: boolean) {
+  const handleOpenChange = (next: boolean) => {
     setOpen(next);
     if (!next) {
       attemptRef.current++;
@@ -63,15 +60,15 @@ export function UploadPostDialog({ children }: { children: React.ReactNode }) {
       fileRef.current = null;
       reset();
     }
-  }
+  };
 
-  function handleCancel() {
+  const handleCancel = () => {
     attemptRef.current++;
     setStep("form");
     setUploadError("");
-  }
+  };
 
-  async function onSubmit(values: FormValues) {
+  const onSubmit = async (values: FormValues) => {
     const attempt = ++attemptRef.current;
     setProgress(0);
     setUploadError("");
@@ -91,119 +88,109 @@ export function UploadPostDialog({ children }: { children: React.ReactNode }) {
         setUploadError(err instanceof Error ? err.message : "Upload failed");
       }
     }
-  }
+  };
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className={cn("w-160", cardClassName)}>
-        {step === "form" && (
-          <>
-            <DialogHeader className="gap-2 text-center">
-              <DialogTitle className="font-heading text-2xl font-bold">
-                Upload your post
-              </DialogTitle>
-              <DialogDescription className="text-text-icons-primary/70">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse commodo libero.
-              </DialogDescription>
-            </DialogHeader>
-            <div>
-              <Input
-                placeholder="Post Title"
-                aria-invalid={!!errors.title}
-                {...register("title")}
-              />
-              {errors.title && (
-                <p className="mt-1 text-sm text-destructive">
-                  {errors.title.message}
-                </p>
-              )}
-            </div>
-            <div>
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={(e) => {
-                  const file = e.target.files?.[0] ?? null;
-                  fileRef.current = file;
-                  setValue("fileName", file?.name ?? "", {
-                    shouldValidate: true,
-                  });
-                }}
-              />
-              <Button
-                type="button"
-                variant="green-outline"
-                aria-invalid={!!errors.fileName}
-                className="w-full justify-center gap-2 aria-invalid:border-destructive"
-                onClick={() => fileInputRef.current?.click()}
-              >
-                {fileName || "Upload image"} <ArrowUpIcon className="size-4" />
-              </Button>
-              {errors.fileName && (
-                <p className="mt-1 text-sm text-destructive">
-                  {errors.fileName.message}
-                </p>
-              )}
-            </div>
-            <DialogFooter className="mx-0 mb-0 justify-center border-none bg-transparent p-0">
-              <Button
-                variant="black"
-                className="h-12 rounded-none mx-auto"
-                onClick={handleSubmit(onSubmit)}
-              >
-                Confirm
-              </Button>
-            </DialogFooter>
-          </>
-        )}
+      <DialogContent className={cn("min-w-160")}>
+        <div className="flex flex-col gap-6">
+          {(step === "form" || step === "uploading") && (
+            <>
+              <DialogHeader className="gap-2 text-center">
+                <DialogTitle className="font-heading text-[35px]">
+                  Upload your post
+                </DialogTitle>
+                <DialogDescription className="text-text-icons-secondary text-lg pb-2">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Suspendisse commodo libero.
+                </DialogDescription>
+              </DialogHeader>
 
-        {step === "uploading" && (
-          <>
-            <DialogHeader className="gap-2 text-center">
-              <DialogTitle className="font-heading text-2xl font-bold">
-                Upload your post
-              </DialogTitle>
-              <DialogDescription className="text-text-icons-primary/70">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse commodo libero.
-              </DialogDescription>
-            </DialogHeader>
-            <Input placeholder="Post Title" value={watch("title")} readOnly />
-            <div>
-              <p className="mb-2 text-sm font-medium">
-                {uploadError ? "Failed to upload your file" : `Loading image ${progress}%`}
-              </p>
-              <Progress
-                value={uploadError ? 100 : progress}
-                className={cn(
-                  "h-2 rounded-none bg-text-icons-disabled",
-                  uploadError ? "[&>div]:bg-[#FF2F2F]" : "[&>div]:bg-background-inverse",
+              <div className="max-w-100 mx-auto w-full">
+                <Input
+                  placeholder="Post Title"
+                  aria-invalid={!!errors.title}
+                  {...register("title")}
+                />
+                {errors.title && (
+                  <p className="mt-1 text-sm text-destructive">
+                    {errors.title.message}
+                  </p>
                 )}
-              />
-              <button
-                type="button"
-                className="mt-2 block w-full text-right text-sm font-semibold underline"
-                onClick={uploadError ? handleSubmit(onSubmit) : handleCancel}
-              >
-                {uploadError ? "Retry" : "Cancel"}
-              </button>
-            </div>
-            <DialogFooter className="mx-0 mb-0 justify-center border-none bg-transparent p-0">
-              <Button
-                variant="black"
-                className="h-12 rounded-none mx-auto"
-                disabled={!uploadError}
-                onClick={uploadError ? handleSubmit(onSubmit) : undefined}
-              >
-                Confirm
-              </Button>
-            </DialogFooter>
-          </>
-        )}
+              </div>
+              <div className="max-w-100 mx-auto w-full">
+                {step === "form" ? (
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0] ?? null;
+                      fileRef.current = file;
+                      setValue("fileName", file?.name ?? "", {
+                        shouldValidate: true,
+                      });
+                    }}
+                  />
+                ) : (
+                  <div className="max-w-100 mx-auto w-full">
+                    <p className="mb-2 text-sm font-medium">
+                      {uploadError
+                        ? "Failed to upload your file"
+                        : `Loading image ${progress}%`}
+                    </p>
+                    <Progress
+                      value={uploadError ? 100 : progress}
+                      className={cn(
+                        "h-2 rounded-none bg-text-icons-disabled",
+                        uploadError
+                          ? "[&>div]:bg-[#FF2F2F]"
+                          : "[&>div]:bg-background-inverse",
+                      )}
+                    />
+                    <button
+                      type="button"
+                      className="mt-2 block w-full text-right text-sm font-semibold underline"
+                      onClick={
+                        uploadError ? handleSubmit(onSubmit) : handleCancel
+                      }
+                    >
+                      {uploadError ? "Retry" : "Cancel"}
+                    </button>
+                  </div>
+                )}
+
+                <Button
+                  type="button"
+                  variant="green-outline"
+                  aria-invalid={!!errors.fileName}
+                  className="w-full justify-center gap-2 aria-invalid:border-destructive"
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  {fileName || "Upload image"}{" "}
+                  <ArrowUpIcon className="size-6" />
+                </Button>
+                {errors.fileName && (
+                  <p className="mt-1 text-sm text-destructive">
+                    {errors.fileName.message}
+                  </p>
+                )}
+              </div>
+              <DialogFooter className="mx-0 mb-0 justify-center border-none bg-transparent p-0 pt-6">
+                <Button
+                  variant="black"
+                  className="mx-auto px-8.5"
+                  disabled={step === "uploading"}
+                  onClick={handleSubmit(onSubmit)}
+                >
+                  Confirm
+                </Button>
+              </DialogFooter>
+            </>
+          )}
+        </div>
 
         {step === "success" && (
           <>
@@ -226,4 +213,6 @@ export function UploadPostDialog({ children }: { children: React.ReactNode }) {
       </DialogContent>
     </Dialog>
   );
-}
+};
+
+export { UploadPostDialog };

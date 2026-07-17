@@ -10,6 +10,7 @@ import { FileTextIcon } from "@/components/icons/file-text";
 type CardProps = {
   image: string;
   imageAlt: string;
+  blurDataUrl?: string | null;
   badge: string;
   title: string;
   meta: string;
@@ -20,9 +21,10 @@ type CardProps = {
   className?: string;
 };
 
-function Card({
+const Card = ({
   image,
   imageAlt,
+  blurDataUrl,
   badge,
   title,
   meta,
@@ -31,7 +33,7 @@ function Card({
   theme = "light",
   className,
   size,
-}: CardProps) {
+}: CardProps) => {
   const isDark = theme === "dark";
   const isLarge = size === "large";
 
@@ -50,6 +52,9 @@ function Card({
         fill
         sizes="(min-width: 1024px) 50vw, 100vw"
         className="object-cover card-transition group-hover:scale-110"
+        {...(blurDataUrl
+          ? { placeholder: "blur" as const, blurDataURL: blurDataUrl }
+          : {})}
       />
       <div
         className={cn(
@@ -104,7 +109,7 @@ function Card({
       </div>
     </Link>
   );
-}
+};
 
 export { Card };
 export type { CardProps };

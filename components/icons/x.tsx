@@ -1,6 +1,6 @@
 import type { SVGProps } from "react";
 
-function XIcon(props: SVGProps<SVGSVGElement>) {
+const XIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
     <svg
       width="48"
@@ -26,6 +26,6 @@ function XIcon(props: SVGProps<SVGSVGElement>) {
       />
     </svg>
   );
-}
+};
 
 export { XIcon };

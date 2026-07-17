@@ -9,6 +9,7 @@
   --color-text-icons-brand: var(--text-icons-brand);
   --color-text-icons-interactive: var(--text-icons-interactive);
   --color-text-icons-highlight: var(--text-icons-highlight);
+  --color-text-icons-secondary: var(--text-icons-secondary);
   --color-background-surface: var(--background-surface);
   --color-background-inverse: var(--background-inverse);
   --color-background-brand: var(--background-brand);
@@ -49,6 +50,7 @@
 
   /* Design system - semantic tokens (purpose, not color name) */
   --text-icons-primary: var(--neutral-black); /* ink text on light surfaces */
+  --text-icons-secondary: var(--gray-dark);
   --text-icons-inverse: var(--neutral-white); /* white text on dark surfaces */
   --text-icons-brand: var(--brand-lime); /* lime text on dark surfaces */
   --text-icons-highlight: var(--brand-orange);
@@ -129,5 +131,85 @@
 }
 
 .main-page-content-padding {
-  @apply mx-5 md:ml-17.5 md:mr-14.5;
+  @apply px-5 md:pl-17.5 md:pr-14.5;
+}
+
+/* Entrance animations: opacity 0 -> 1 plus a slight slide from the named
+   direction. Written as plain (unlayered) classes instead of --animate-*
+   theme values: tw-animate-css registers a wildcard `animate-*` utility
+   that intercepts any class with that prefix, so a theme-based
+   animate-fade-from-* utility gets silently overridden by it. Being
+   unlayered here means this always wins over that layered wildcard,
+   regardless of source order. */
+.animate-fade-from-bottom {
+  animation: fade-from-bottom 0.5s ease-out both;
+}
+
+.animate-fade-from-top {
+  animation: fade-from-top 0.5s ease-out both;
+}
+
+.animate-fade-from-left {
+  animation: fade-from-left 0.5s ease-out both;
+}
+
+.animate-fade-from-right {
+  animation: fade-from-right 0.5s ease-out both;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out both;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-from-bottom {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-from-top {
+  from {
+    opacity: 0;
+    transform: translateY(-1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-from-left {
+  from {
+    opacity: 0;
+    transform: translateX(-1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fade-from-right {
+  from {
+    opacity: 0;
+    transform: translateX(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }

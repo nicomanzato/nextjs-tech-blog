@@ -5,7 +5,7 @@ import { Slot } from "radix-ui";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex h-14 shrink-0 base-transition items-center justify-center whitespace-nowrap border-2 border-transparent px-6 text-base font-bold transition-colors outline-none select-none active:translate-y-px disabled:pointer-events-none disabled:translate-y-0",
+  "inline-flex h-14 shrink-0 base-transition items-center justify-center whitespace-nowrap border-2 border-transparent px-6 text-lg font-base transition-colors outline-none select-none active:translate-y-px disabled:pointer-events-none disabled:translate-y-0",
   {
     variants: {
       variant: {
@@ -17,6 +17,7 @@ const buttonVariants = cva(
           "bg-background-inverse text-text-icons-inverse hover:bg-background-brand hover:border-border-inverse hover:text-text-icons-primary focus-visible:border-border-brand focus-visible:ring-4 focus-visible:ring-border-brand/50 active:bg-background-brand active:text-text-icons-primary disabled:bg-transparent disabled:text-muted-foreground",
         "green-outline":
           "border-border-inverse bg-background-brand text-text-icons-primary hover:bg-background-inverse hover:text-text-icons-brand focus-visible:border-border-brand focus-visible:ring-4 focus-visible:ring-border-inverse/30 active:bg-background-inverse active:text-text-icons-brand disabled:border-transparent disabled:bg-transparent disabled:text-muted-foreground",
+        transparent: "",
       },
     },
     defaultVariants: {
@@ -25,7 +26,7 @@ const buttonVariants = cva(
   },
 );
 
-function Button({
+const Button = ({
   className,
   variant = "primary",
   asChild = false,
@@ -33,7 +34,7 @@ function Button({
 }: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean;
-  }) {
+  }) => {
   const Comp = asChild ? Slot.Root : "button";
 
   return (
@@ -44,6 +45,6 @@ function Button({
       {...props}
     />
   );
-}
+};
 
 export { Button, buttonVariants };

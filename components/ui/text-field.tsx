@@ -8,7 +8,7 @@ type TextFieldProps = React.ComponentProps<typeof Input> & {
   error?: string;
 };
 
-function TextField({ label, error, id, className, ...props }: TextFieldProps) {
+const TextField = ({ label, error, id, className, ...props }: TextFieldProps) => {
   const generatedId = React.useId();
   const inputId = id ?? generatedId;
 
@@ -34,6 +34,6 @@ function TextField({ label, error, id, className, ...props }: TextFieldProps) {
       {error && <p className="text-sm text-destructive">{error}</p>}
     </div>
   );
-}
+};
 
 export { TextField };

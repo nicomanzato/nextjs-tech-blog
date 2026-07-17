@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 const SOCIALS = [
   { url: "/icons/linkedin.svg", alt: "LinkedIn" },
@@ -7,9 +8,18 @@ const SOCIALS = [
   { url: "/icons/x.svg", alt: "X" },
 ];
 
-function SiteFooter() {
+type SiteFooterProps = {
+  className?: string;
+};
+
+function SiteFooter({ className }: SiteFooterProps) {
   return (
-    <footer className="bg-background-interactive p-16 md:pl-28 md:pr-48 md:pt-21 md:pb-17 flex flex-col text-text-icons-inverse main-page-content-padding md:h-66.75">
+    <footer
+      className={cn(
+        "bg-background-interactive p-16 md:pl-28 md:pr-48 md:pt-21 md:pb-17 flex flex-col text-text-icons-inverse md:h-66.75",
+        className,
+      )}
+    >
       <div className="flex flex-col gap-12 md:flex-row items-center justify-between">
         <Link href="/">
           <Image

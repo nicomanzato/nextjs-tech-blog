@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 
-function NewsletterBanner() {
+const NewsletterBanner = () => {
   return (
     <div className="flex flex-col items-start gap-4 bg-background-interactive p-8 md:px-10 md:py-11 text-text-icons-inverse sm:flex-row sm:items-center sm:justify-between">
       <p className="text-[27px] leading-[1.21]">
@@ -12,6 +12,6 @@ function NewsletterBanner() {
       </Button>
     </div>
   );
-}
+};
 
 export { NewsletterBanner };

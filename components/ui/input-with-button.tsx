@@ -9,12 +9,12 @@ type InputWithButtonProps = React.ComponentProps<typeof Input> & {
   buttonProps?: React.ComponentProps<typeof Button>
 }
 
-function InputWithButton({
+const InputWithButton = ({
   buttonText,
   buttonProps,
   className,
   ...props
-}: InputWithButtonProps) {
+}: InputWithButtonProps) => {
   return (
     <div className="flex">
       <Input className={cn("flex-1", className)} {...props} />
