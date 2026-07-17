@@ -139,7 +139,7 @@ const PostDetail = async ({ params }: { params: Promise<{ id: string }> }) => {
               <Card
                 key={p.id}
                 {...toRelatedCardProps(p)}
-                className="h-auto aspect-9/10 w-[62%] last:mr-5 shrink-0 md:w-auto"
+                className="h-auto aspect-9/10 w-[62%] last:mr-5 md:last:mr-0 shrink-0 md:w-auto"
               />
             ))}
           </div>
