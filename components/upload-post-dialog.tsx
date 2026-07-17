@@ -99,7 +99,7 @@ const UploadPostDialog = ({ children }: { children: React.ReactNode }) => {
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className={cn("min-w-160")}>
+      <DialogContent className={cn("md:min-w-160")}>
         <div className="flex flex-col gap-6">
           {(step === "form" || step === "uploading") && (
             <>
