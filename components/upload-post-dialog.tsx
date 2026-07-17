@@ -98,7 +98,7 @@ const UploadPostDialog = ({ children }: { children: React.ReactNode }) => {
           {(step === "form" || step === "uploading") && (
             <>
               <DialogHeader className="gap-2 text-center">
-                <DialogTitle className="font-heading text-[35px]">
+                <DialogTitle className="font-heading text-4xl">
                   Upload your post
                 </DialogTitle>
                 <DialogDescription className="text-text-icons-secondary text-lg pb-2">
@@ -195,11 +195,13 @@ const UploadPostDialog = ({ children }: { children: React.ReactNode }) => {
         {step === "success" && (
           <>
             <DialogHeader>
-              <DialogTitle className="font-heading text-center text-2xl font-bold">
-                Your post was successfully uploaded!
+              <DialogTitle className="font-heading text-center text-4xl">
+                Your post was
+                <br />
+                successfully uploaded!
               </DialogTitle>
             </DialogHeader>
-            <DialogFooter className="mx-0 mb-0 justify-center border-none bg-transparent p-0">
+            <DialogFooter className="mx-0 mb-0 justify-center border-none bg-transparent p-0  pt-10">
               <Button
                 variant="black"
                 className="h-12 rounded-none mx-auto"

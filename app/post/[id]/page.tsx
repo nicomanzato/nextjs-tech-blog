@@ -7,7 +7,13 @@ import { MostViewed } from "@/components/most-viewed";
 import { UploadPostDialog } from "@/components/upload-post-dialog";
 import { ArrowRightIcon } from "@/components/icons/arrow-right";
 import { FileTextIcon } from "@/components/icons/file-text";
-import { getPost, getPosts, type PostSummary } from "@/lib/api";
+import {
+  getPost,
+  getPosts,
+  getRelatedPosts,
+  type PostSummary,
+  type RelatedPost,
+} from "@/lib/api";
 import { renderArticleMarkdown } from "@/lib/parse-article";
 import { SiteFooter } from "@/components/site-footer";
 
@@ -21,6 +27,7 @@ const SOCIALS = [
 // body field yet (PostDetail only has title/subtitle/author/readTime). Swap
 // this for real per-post markdown once the backend exposes it.
 const ARTICLE_MARKDOWN = `
+# Curabitur sit amet sapien at velit fringilla tincidunt porttitor eget lacus. Sed mauris libero, malesuada et venenatis vitae, porta ac enim.
 Curabitur sit amet sapien at velit fringilla tincidunt porttitor eget lacus. Sed mauris libero,
 malesuada et venenatis vitae, porta ac enim. Aliquam erat volutpat. Cras tristique eleifend dolor,
 et ultricies nisl feugiat sed. Pellentesque blandit orci eu velit vehicula commodo. Phasellus
@@ -70,13 +77,28 @@ function toCardProps(post: PostSummary) {
   };
 }
 
+function toRelatedCardProps(post: RelatedPost) {
+  return {
+    image: post.imageUrl,
+    imageAlt: post.title,
+    blurDataUrl: post.blurDataUrl,
+    badge: "Related",
+    title: post.title,
+    meta: "",
+    href: `/post/${post.id}`,
+  };
+}
+
 const PostDetail = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
-  const [post, posts] = await Promise.all([getPost(id), getPosts()]);
+  const [post, posts, relatedPosts] = await Promise.all([
+    getPost(id),
+    getPosts(),
+    getRelatedPosts(),
+  ]);
 
   const otherPosts = posts.filter((p) => p.id !== id);
   const mostViewedPosts = otherPosts.slice(0, 4);
-  const relatedPosts = otherPosts.slice(0, 3);
 
   return (
     <main className="flex flex-col gap-8 md:gap-16 pb-16 bg-white">
@@ -94,7 +116,7 @@ const PostDetail = async ({ params }: { params: Promise<{ id: string }> }) => {
         <div className="relative flex h-full flex-col justify-center gap-8 px-8 md:px-18">
           <Link
             href="/"
-            className="inline-flex w-fit items-center gap-1 font-semibold text-text-icons-inverse"
+            className="inline-flex w-fit items-center gap-1 font-semibold text-text-icons-inverse hover:underline underline-offset-6"
           >
             <ArrowLeft className="size-4" /> Blog
           </Link>
@@ -139,7 +161,7 @@ const PostDetail = async ({ params }: { params: Promise<{ id: string }> }) => {
         </div>
         <article className="order-1 md:order-2 col-span-1 md:col-span-11 flex flex-col gap-8 bg-background-surface text-text-icons-primary md:pl-8">
           <div
-            className="flex flex-col gap-6 md:px-8 pb-8 [&>h1]:text-xl [&>h1]:font-bold [&>p]:text-text-icons-primary/70 [&>blockquote]:border-l-4 [&>blockquote]:border-background-brand [&>blockquote]:pl-6 [&>blockquote]:text-lg [&>blockquote]:font-medium [&_a]:text-text-icons-interactive [&_a]:underline [&_img]:h-64 [&_img]:w-full [&_img]:object-cover md:[&_img]:h-96"
+            className="flex flex-col gap-6 md:px-8 pb-8 [&>h1]:mt-10 [&>h1]:text-xl [&>h1]:font-bold [&>p]:text-text-icons-primary/70 [&>p:has(img)]:mt-10 [&>blockquote]:mt-10 [&>blockquote+p]:mt-10 [&>blockquote]:border-l-4 [&>blockquote]:border-background-brand [&>blockquote]:py-6 [&>blockquote]:pl-6 [&>blockquote]:text-lg [&>blockquote]:font-medium [&_a]:text-text-icons-interactive [&_a]:underline [&_img]:h-64 [&_img]:w-full [&_img]:object-cover md:[&_img]:h-96"
             dangerouslySetInnerHTML={{
               __html: renderArticleMarkdown(ARTICLE_MARKDOWN),
             }}
@@ -153,22 +175,26 @@ const PostDetail = async ({ params }: { params: Promise<{ id: string }> }) => {
         />
       </div>
 
-      {relatedPosts.length === 3 && (
-        <div className="flex flex-col gap-6 main-page-content-padding">
+      {relatedPosts.length > 0 && (
+        <div className="flex flex-col gap-3 max-w-268 mx-auto w-full pb-12">
           <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-bold text-text-icons-inverse">
+            <h2 className="text-4xl font-bold text-text-icons-primary">
               Related posts
             </h2>
             <UploadPostDialog>
-              <button className="group inline-flex items-center gap-1 font-semibold text-text-icons-inverse">
+              <button className="group inline-flex items-center gap-1 font-semibold text-text-icons-primary">
                 New post
                 <ArrowRightIcon className="size-4 text-text-icons-brand group-hover:text-text-icons-highlight" />
               </button>
             </UploadPostDialog>
           </div>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {relatedPosts.map((p) => (
-              <Card key={p.id} {...toCardProps(p)} />
+            {relatedPosts.slice(0, 3).map((p) => (
+              <Card
+                key={p.id}
+                {...toRelatedCardProps(p)}
+                className="h-auto aspect-9/10"
+              />
             ))}
           </div>
         </div>

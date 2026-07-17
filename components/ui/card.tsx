@@ -65,13 +65,15 @@ const Card = ({
         )}
       >
         <div className="flex flex-col">
-          <div
-            className={cn("bg-background-surface w-fit px-6 pt-6", {
-              "bg-black": isDark,
-            })}
-          >
-            <Badge>{badge}</Badge>
-          </div>
+          {badge && (
+            <div
+              className={cn("bg-background-surface w-fit px-6 pt-6", {
+                "bg-black": isDark,
+              })}
+            >
+              <Badge>{badge}</Badge>
+            </div>
+          )}
           <div
             className={cn(
               "bg-background-surface p-6 pt-3 pb-4 gap-3 flex flex-col md:w-fit",
@@ -95,14 +97,16 @@ const Card = ({
                 Read
                 <ArrowRightIcon className="size-4 text-text-icons-interactive group-hover:text-text-icons-highlight base-transition" />
               </span>
-              <span
-                className={cn(
-                  "inline-flex items-center gap-1 text-muted-foreground text-sm",
-                )}
-              >
-                <FileTextIcon className="size-4" />
-                {meta}
-              </span>
+              {meta && (
+                <span
+                  className={cn(
+                    "inline-flex items-center gap-1 text-muted-foreground text-sm",
+                  )}
+                >
+                  <FileTextIcon className="size-4" />
+                  {meta}
+                </span>
+              )}
             </div>
           </div>
         </div>

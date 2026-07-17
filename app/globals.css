@@ -37,6 +37,10 @@
   --radius-xl: calc(var(--radius) * 1.4);
 }
 
+@theme {
+  --text-4xl: 35px;
+}
+
 :root {
   /* Design system - palette (raw brand values, estimated from Figma) */
   --neutral-white: #ffffff;
