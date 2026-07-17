@@ -149,7 +149,7 @@ const PostDetail = async ({ params }: { params: Promise<{ id: string }> }) => {
       </section>
 
       <div className="grid grid-cols-1 md:grid-cols-20 gap-x-8 gap-y-10 main-page-content-padding">
-        <div className="order-2 md:order-1 flex gap-4 flex-col px-0 pt-6 col-span-1 md:col-span-4">
+        <div className="order-2 md:order-1 flex gap-4 flex-col px-0 pt-6 col-span-1 md:col-span-4 md:sticky md:top-28 md:self-start">
           <span className="font-bold text-lg">Share on</span>
           <div className="flex gap-8 pt-3">
             {SOCIALS.map(({ url, alt }) => (
